@@ -1,7 +1,7 @@
 {
-  "name": "javascript-action",
+  "name": "html-headings",
   "version": "1.0.0",
-  "description": "JavaScript Action Template",
+  "description": "Github Action to correct heading order in HTML documents",
   "main": "index.js",
   "scripts": {
     "lint": "eslint .",
@@ -11,21 +11,23 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/javascript-action.git"
+    "url": "git+https://github.com/cherry-john/action-headings.git"
   },
   "keywords": [
     "GitHub",
     "Actions",
     "JavaScript"
   ],
-  "author": "",
+  "author": "John Cherry",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/actions/javascript-action/issues"
+    "url": "https://github.com/cherry-john/action-headings/issues"
   },
-  "homepage": "https://github.com/actions/javascript-action#readme",
+  "homepage": "https://github.com/cherry-john/action-headings#readme",
   "dependencies": {
-    "@actions/core": "^1.2.5"
+    "@actions/core": "^1.2.5",
+    "glob": "^7.2.0",
+    "jsdom": "^19.0.0"
   },
   "devDependencies": {
     "@vercel/ncc": "^0.31.1",

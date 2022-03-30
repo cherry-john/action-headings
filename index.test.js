@@ -1,24 +1,17 @@
-const wait = require('./wait');
-const process = require('process');
-const cp = require('child_process');
-const path = require('path');
+const { getValidHeading } = require('./src/headings');
 
-test('throws invalid number', async () => {
-  await expect(wait('foo')).rejects.toThrow('milliseconds not a number');
+//headings.js | getValidHeading()
+
+test('[getValidHeading()] Returns Same heading',  () => {
+  expect(getValidHeading("h2", "h1")).toBe("h2");
 });
 
-test('wait 500 ms', async () => {
-  const start = new Date();
-  await wait(500);
-  const end = new Date();
-  var delta = Math.abs(end - start);
-  expect(delta).toBeGreaterThanOrEqual(500);
+test('[getValidHeading()] Change Heading to fit structure', () => {
+  expect(getValidHeading("h5", "h1")).toBe("h2");
 });
 
-// shows how the runner will run a javascript action with env / stdout protocol
-test('test runs', () => {
-  process.env['INPUT_MILLISECONDS'] = 100;
-  const ip = path.join(__dirname, 'index.js');
-  const result = cp.execSync(`node ${ip}`, {env: process.env}).toString();
-  console.log(result);
-})
+test('[getValidHeading()] Allow returning to higher headings', () => {
+  expect(getValidHeading("h1", "h4")).toBe("h1");
+});
+
+//TODO more tests :)
