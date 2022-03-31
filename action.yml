@@ -1,8 +1,16 @@
 name: 'Verify HTML Headings'
 description: 'Verifies that the Heading levels in HTML documents are in a valid order'
+inputs:
+  githubToken:
+    description: Github Token
+    required: true
+  defaultBranch:
+    description: Default repo branch
+    required: true
+    default: 'main'
 outputs:
-  branch: # output will be available to future steps
-    description: 'url to branch'
+  pull: # output will be available to future steps
+    description: 'URL of Pull Request'
 runs:
   using: 'node16'
   main: 'dist/index.js'

@@ -1,5 +1,6 @@
 const simpleGit = require('simple-git');
 const core = require('@actions/core');
+const github = require('@actions/github');
 
 /**
  * 
@@ -12,7 +13,7 @@ const createBranch = async (git, branchName) => {
         .checkout(branchName)
         .then (() => {
             //checked out so branch exists
-            core.info(branchName + " already exists, creating PR on this branch");
+            core.info(branchName + " already exists, creating commit on this branch");
         })
         .catch(() => {
             //doesn't exist so create
@@ -35,15 +36,42 @@ const createBranch = async (git, branchName) => {
         });
 }
 
+const createPR = async (branchName) => {
+    const octokit = github.getOctokit(core.getInput('githubToken'));
+
+    await octokit.rest.pulls.create({
+        owner: "github-actions[bot]",
+        repo: github.context.repo,
+        head: branchName,
+        base: core.getInput('defaultBranch'),
+        title: "Merge HTML Heading Changes"
+    })
+    .then((data) => {
+        core.setOutput("pull", data.url);
+    })
+    .catch((err) => {
+        core.setFailed(err);
+    });
+}
+
 const gitConnect = async () => {
     const git = simpleGit(".");
+    const branchName = "Test";
     //set user config to github bot
     await git
         .addConfig('user.name', "github-actions[bot]")
         .addConfig('user.email', "github-actions[bot]@users.noreply.github.com");
     //add all changes
     git.add(".");
-    createBranch(git, "Test" );
+    if ((await git.diffSummary(['--cached'])).files.length > 0 ){
+        //There are changed files so commit them
+        await createBranch(git, branchName);
+        //generate the PR for this branch
+        createPR(branchName);
+    } else {
+        //no changes, just log and return
+        core.log("No changes to files!");
+    }
 }
 
 module.exports = { gitConnect }
