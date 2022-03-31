@@ -30,8 +30,6 @@ const createBranch = async (git, branchName) => {
         .catch((err) => {
             core.setFailed(err);
         });
-    //pull changes before committing
-    await git.pull();
     await git
         .push("origin", branchName, { '--set-upstream': null })
         .catch((err) => {
@@ -60,7 +58,7 @@ const createPR = async (branchName) => {
 
 const gitConnect = async () => {
     const git = simpleGit(".");
-    const branchName = "Test" + String(new Date().getTime());
+    const branchName = "test" + String(new Date().getTime());
     //set user config to github bot
     await git
         .addConfig('user.name', "github-actions[bot]")
