@@ -1,6 +1,7 @@
 const simpleGit = require('simple-git');
 const core = require('@actions/core');
 const github = require('@actions/github');
+const { context } = require('@actions/github');
 
 /**
  * 
@@ -40,8 +41,8 @@ const createPR = async (branchName) => {
     const octokit = github.getOctokit(core.getInput('githubToken'));
 
     await octokit.rest.pulls.create({
-        owner: "github-actions[bot]",
-        repo: github.context.repo,
+        owner: context.owner,
+        repo: context.repo,
         head: branchName,
         base: core.getInput('defaultBranch'),
         title: "Merge HTML Heading Changes"
