@@ -29,7 +29,7 @@ const createBranch = async (git, branchName) => {
             core.setFailed(err);
         });
     await git
-        .push("--set-upstream origin" + branchName )
+        .push("--set-upstream origin " + branchName )
         .catch((err) => {
             core.setFailed(err);
         });
@@ -37,6 +37,10 @@ const createBranch = async (git, branchName) => {
 
 const gitConnect = async () => {
     const git = simpleGit(".");
+    //set user config to github bot
+    await git
+        .addConfig('user.name', "github-actions[bot]")
+        .addConfig('user.email', "github-actions[bot]@users.noreply.github.com");
     //add all changes
     git.add(".");
     createBranch(git, "Test" );
