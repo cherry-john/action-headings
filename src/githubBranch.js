@@ -19,34 +19,27 @@ const createBranch = async (git, branchName) => {
             core.info("Creating branch " + branchName);
             return git.checkoutLocalBranch(branchName);
         });
-}
 
-/**
- * 
- * @param {simpleGit} git 
- */
-const commitAndPush = async (git) => {
     await git
-        .commit("Correct HTML Headings", "")
+        .commit("Correct HTML Headings")
         .then(() => {
             core.info("Commit Created");
         })
         .catch((err) => {
-            core.error(err);
+            core.setFailed(err);
         });
     await git
-        .push()
+        .push("--set-upstream origin" + branchName )
         .catch((err) => {
-            core.error(err);
-        })
+            core.setFailed(err);
+        });
 }
 
 const gitConnect = async () => {
     const git = simpleGit(".");
     //add all changes
     git.add(".");
-    createBranch(git, "Test");
-    commitAndPush(git);
+    createBranch(git, "Test" );
 }
 
 module.exports = { gitConnect }
