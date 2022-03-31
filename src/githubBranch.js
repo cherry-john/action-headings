@@ -29,7 +29,7 @@ const createBranch = async (git, branchName) => {
             core.setFailed(err);
         });
     await git
-        .push("--set-upstream origin " + branchName )
+        .push("origin", branchName, { '--set-upstream': null })
         .catch((err) => {
             core.setFailed(err);
         });
