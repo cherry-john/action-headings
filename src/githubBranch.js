@@ -30,6 +30,8 @@ const createBranch = async (git, branchName) => {
         .catch((err) => {
             core.setFailed(err);
         });
+    //pull changes before committing
+    await git.pull();
     await git
         .push("origin", branchName, { '--set-upstream': null })
         .catch((err) => {
@@ -39,7 +41,8 @@ const createBranch = async (git, branchName) => {
 
 const createPR = async (branchName) => {
     const octokit = github.getOctokit(core.getInput('githubToken'));
-
+    core.log(context.owner);
+    core.log(context.repo);
     await octokit.rest.pulls.create({
         owner: context.owner,
         repo: context.repo,
