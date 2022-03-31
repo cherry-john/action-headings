@@ -60,7 +60,7 @@ const createPR = async (branchName) => {
 
 const gitConnect = async () => {
     const git = simpleGit(".");
-    const branchName = "Test";
+    const branchName = "Test" + String(new Date().getTime());
     //set user config to github bot
     await git
         .addConfig('user.name', "github-actions[bot]")
