@@ -1,7 +1,7 @@
 const { getOctokit, context } = require('@actions/github');
 const crypto = require('crypto');
 
-async function newBranch(branchName) {
+async function createBranch(branchName) {
     const toolkit = getOctokit(process.env.GITHUB_TOKEN);
 
     let ref = "refs/heads/"+branchName;
@@ -17,4 +17,4 @@ async function newBranch(branchName) {
     });
 }
 
-module.exports = {newBranch}
+module.exports = { createBranch }
