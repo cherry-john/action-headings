@@ -39,8 +39,8 @@ const createBranch = async (git, branchName) => {
 
 const createPR = async (branchName) => {
     const octokit = github.getOctokit(core.getInput('githubToken'));
-    core.log(context.owner);
-    core.log(context.repo);
+    core.info(context.owner);
+    core.info(context.repo);
     await octokit.rest.pulls.create({
         owner: context.owner,
         repo: context.repo,
