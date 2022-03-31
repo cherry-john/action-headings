@@ -67,7 +67,7 @@ const gitConnect = async () => {
         //There are changed files so commit them
         await createBranch(git, branchName);
         //generate the PR for this branch
-        createPR(branchName);
+        await createPR(branchName);
     } else {
         //no changes, just log and return
         core.log("No changes to files!");
