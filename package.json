@@ -29,7 +29,7 @@
     "@actions/github": "^5.0.1",
     "glob": "^8.0.1",
     "jsdom": "^19.0.0",
-    "simple-git": "^3.6.0"
+    "simple-git": "^3.7.1"
   },
   "devDependencies": {
     "@vercel/ncc": "^0.33.4",
